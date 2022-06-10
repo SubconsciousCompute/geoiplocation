@@ -14,3 +14,6 @@ license = "MIT"
 reqwest = { version = "0.11.10", features = ["json"] }
 tokio = {version="1.19.2", features =["full"]}
 serde = {version="1.0.137", features = ["derive"]}
+
+[env]
+LOCATION_API_URL = "https://www.loc.subcom.link/api/v1/iplocation"

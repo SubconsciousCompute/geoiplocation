@@ -2,11 +2,14 @@
 //!
 //! Provides abstraction over the fields returned by the JSON response. Returns a `Struct` for the
 //! given query.
+//! You can set your own env for location api using something like `export LOCATION_API_URL=<your-url>`
+//! The final URL looks something like `your-url/IP?apikey=KEY`
 
 use crate::geoiplocation::Location;
 use reqwest::Url;
 
 pub mod geoiplocation;
+use std::env;
 
 /// `async` function to get the location
 ///
@@ -28,10 +31,12 @@ pub mod geoiplocation;
 /// }
 /// ```
 pub async fn get_location(
-    ip: String,
+    ip: &str,
     key: &str,
 ) -> Result<Option<Location>, Box<dyn std::error::Error>> {
-    let mut url = Url::parse(&*format!("http://65.1.118.229/api/v1/iplocation/{}", ip))?;
+    let location_api_url = env::var("LOCATION_API_URL").expect("cannot parse URL");
+
+    let mut url = Url::parse(&*format!("{}/{}", location_api_url, ip))?;
     url.set_query(Some(&*format!("apikey={}", key)));
 
     Ok(Some(reqwest::get(url).await?.json::<Location>().await?))
