@@ -4,7 +4,7 @@ version = "0.2.0"
 edition = "2021"
 authors = ["sn99 <siddharthn.099@gmail.com>"]
 description = "Get location based on IP"
-keywords = ["location", "ip", "json"]
+keywords = ["location", "ip", "json", "get"]
 readme = "README.md"
 license = "MIT"
 
