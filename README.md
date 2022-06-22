@@ -6,7 +6,7 @@ Find location given the IP address.
 Provides abstraction over the fields returned by the JSON response. Returns a `Struct` for the
 given query.
 
-You can set your own env for location api using something like `export LOCATION_API_URL=<your-url>`
+You can set your own env for location api using something like `export SUBCOM_LOCATION_API_URL=<your-url>`
 The final URL looks something like `your-url/IP?apikey=KEY`.
 
 Two methods are provides(more documentation provided):

@@ -3,7 +3,7 @@
 //! Provides abstraction over the fields returned by the JSON response. Returns a `Struct` for the
 //! given query.
 //!
-//! You can set your own env for location api using something like `export LOCATION_API_URL=<your-url>`
+//! You can set your own env for location api using something like `export SUBCOM_LOCATION_API_URL=<your-url>`
 //! The final URL looks something like `your-url/IP?apikey=KEY`.
 //!
 //! Two methods are provides(more documentation provided):
@@ -41,7 +41,7 @@ use std::env;
 /// }
 /// ```
 pub async fn get_location(ip: &str, key: &str) -> anyhow::Result<Option<Location>> {
-    let location_api_url = env::var("LOCATION_API_URL").expect("cannot parse URL");
+    let location_api_url = env::var("SUBCOM_LOCATION_API_URL").expect("cannot parse URL");
 
     let mut url = Url::parse(&*format!("{}/{}", location_api_url, ip))?;
     url.set_query(Some(&*format!("apikey={}", key)));
@@ -54,7 +54,7 @@ pub async fn get_location(ip: &str, key: &str) -> anyhow::Result<Option<Location
 /// Instead of holding the values in a Struct he hold the in `HashMap<String, String>`, this should
 /// provide a fallback in case the api is ever changing to keep on updating the struct
 pub async fn get_location_fallback(ip: &str, key: &str) -> anyhow::Result<HashMap<String, String>> {
-    let location_api_url = env::var("LOCATION_API_URL").expect("cannot parse URL");
+    let location_api_url = env::var("SUBCOM_LOCATION_API_URL").expect("cannot parse URL");
 
     let mut url = Url::parse(&*format!("{}/{}", location_api_url, ip))?;
     url.set_query(Some(&*format!("apikey={}", key)));
