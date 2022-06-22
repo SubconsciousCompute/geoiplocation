@@ -9,6 +9,7 @@ use crate::geoiplocation::Location;
 use reqwest::Url;
 
 pub mod geoiplocation;
+use std::collections::HashMap;
 use std::env;
 
 /// `async` function to get the location
@@ -30,14 +31,27 @@ use std::env;
 ///     Ok(())
 /// }
 /// ```
-pub async fn get_location(
-    ip: &str,
-    key: &str,
-) -> Result<Option<Location>, Box<dyn std::error::Error>> {
+pub async fn get_location(ip: &str, key: &str) -> anyhow::Result<Option<Location>> {
     let location_api_url = env::var("LOCATION_API_URL").expect("cannot parse URL");
 
     let mut url = Url::parse(&*format!("{}/{}", location_api_url, ip))?;
     url.set_query(Some(&*format!("apikey={}", key)));
 
     Ok(Some(reqwest::get(url).await?.json::<Location>().await?))
+}
+
+/// An `async` fallback method to get JSON response
+///
+/// Instead of holding the values in a Struct he hold the in `HashMap<String, String>`, this should
+/// provide a fallback in case the api is ever changing to keep on updating the struct
+pub async fn get_location_fallback(ip: &str, key: &str) -> anyhow::Result<HashMap<String, String>> {
+    let location_api_url = env::var("LOCATION_API_URL").expect("cannot parse URL");
+
+    let mut url = Url::parse(&*format!("{}/{}", location_api_url, ip))?;
+    url.set_query(Some(&*format!("apikey={}", key)));
+
+    Ok(reqwest::get(url)
+        .await?
+        .json::<HashMap<String, String>>()
+        .await?)
 }
