@@ -1,7 +1,21 @@
 # geoiplocation
 Get location data for a given IP
 
-Find location given the IP address.Provides abstraction over the fields returned by the JSON response. Returns a `Struct` for the given query.
+Find location given the IP address.
+
+Provides abstraction over the fields returned by the JSON response. Returns a `Struct` for the
+given query.
+
+You can set your own env for location api using something like `export SUBCOM_LOCATION_API_URL=<your-url>`
+The final URL looks something like `your-url/IP?apikey=KEY`.
+
+Two methods are provides(more documentation provided):
+
+- `async fn get_location(ip: &str, key: &str) -> anyhow::Result<Option<Location>>`
+- `async fn get_location_fallback(ip: &str, key: &str) -> anyhow::Result<HashMap<String, String>>`
+
+**NOTE:** Still in production so a few things might break or change, you can use `cargo doc --open` for better
+experience or read it [here](https://docs.rs/geoiplocation/latest/geoiplocation/index.html).
 
 Eg:
 
