@@ -15,7 +15,7 @@ Two methods are provides(more documentation provided):
 - `async fn get_location_fallback(ip: &str, key: &str) -> anyhow::Result<HashMap<String, String>>`
 
 **NOTE:** Still in production so a few things might break or change, you can use `cargo doc --open` for better
-experience or read it [here]().
+experience or read it [here](https://docs.rs/geoiplocation/latest/geoiplocation/index.html).
 
 Eg:
 
